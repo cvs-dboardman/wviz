@@ -1,0 +1,36 @@
+{
+  "name": "BaselineSkills",
+  "children": [
+    {
+      "name": "skills-list",
+      "children": [
+        {
+          "name": "skill-1",
+          "size": 1759
+        },
+        {
+          "name": "skill-2",
+          "size": 2800
+        },
+        {
+          "name": "skill-3",
+          "size": 5800
+        },
+        {
+          "name": "skill-4",
+          "size": 800
+        },
+        {
+          "name": "skill-5",
+          "size": 1200
+        },
+        {
+          "name": "skill-6",
+          "size": 1300
+        }
+
+
+      ]
+    }
+  ]
+}

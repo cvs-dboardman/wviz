@@ -1,0 +1,101 @@
+body{
+  font-family: Helvetica;
+}
+
+div{
+  border: 1px solid #000;
+
+}
+
+#graph-container{
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  height:175px;
+}
+
+#sparkline-title{
+  display: block;
+  position: relative;
+  width: 70%;
+  margin-left: 15%;
+  text-align: center;
+  border-bottom: thin solid black;
+  margin-top: 10px;
+  margin-bottom: 30px;
+  padding-bottom: 10px;
+  font-size: 20px;
+}
+
+.label-wrapper{
+  position: absolute;
+  width: 10%;
+  display: inline-block;
+  text-align: right;
+  top:35px;
+
+}
+
+#count-label, #rating-label{
+  margin-top: 40px;
+}
+
+
+#a-info-wrapper{
+  margin-left: 10%;
+}
+
+.col-wrapper{
+  position: relative;
+  display: inline-block;
+  width: 50%;
+  text-align: center;
+}
+
+.sparkline {
+  fill: none;
+  stroke: #333;
+  stroke-width: 1px;
+}
+
+.sparkcircle {
+  fill: red;
+  stroke: none;
+}
+
+.sparkline-wrapper{
+  position: relative;
+  display: inline-block;
+  height: 40px;
+  cursor:pointer;
+  width: 100%;
+  color: black;
+  margin-bottom: 15px;
+}
+
+#insight-row-avgRating{
+  top:-12px;
+}
+
+.text-value{
+  position: absolute;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.text-flip-number{
+  position: absolute;
+  color:steelblue;
+  font-size: 18px;
+  text-align: center;
+  left: 105%;
+  top:-2px;
+}
+
+.flip-descriptor-tag{
+  position: absolute;
+  font-size: 16px;
+  text-align: center;
+  left:10%;
+  top:8px;
+}

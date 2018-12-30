@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang='en' class=''>
+<head>
+
+
+
+<style class="cp-pen-styles">body{
+  height: 95vh;
+}
+
+.main{
+  display: flex;
+  margin-top: 20px;
+  margin-left: 50px;
+  align-content: center;
+  justify-content: center;
+  flex-direction: column;
+  /*    height: 100%;  */
+  /*   width: 100vw; */
+}
+
+#container{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  /*   align-self: center; */
+  height: 700px;
+  width: 950px;
+  padding: 50px;
+}
+
+.state {
+  fill: none;
+  stroke: white;
+  stroke-linejoin: round; 
+}
+
+#tooltip{
+  position: absolute;
+  background-color: rgba(255,255,255,0.7);
+  border: solid 1px black;
+  padding: 10px;
+  visibility: hidden;
+  font: bold 12px sans-serif;
+}
+
+</style>
+</head>
+<body>
+  <h1>Labor demand for Teachers</h1>
+
+<script>
+  
+"use strict";"object"!=typeof window.CP&&(window.CP={}),window.CP.PenTimer={programNoLongerBeingMonitored:!1,timeOfFirstCallToShouldStopLoop:0,_loopExits:{},_loopTimers:{},START_MONITORING_AFTER:2e3,STOP_ALL_MONITORING_TIMEOUT:5e3,MAX_TIME_IN_LOOP_WO_EXIT:2200,exitedLoop:function(o){this._loopExits[o]=!0},shouldStopLoop:function(o){if(this.programKilledSoStopMonitoring)return!0;if(this.programNoLongerBeingMonitored)return!1;if(this._loopExits[o])return!1;var t=this._getTime();if(0===this.timeOfFirstCallToShouldStopLoop)return this.timeOfFirstCallToShouldStopLoop=t,!1;var i=t-this.timeOfFirstCallToShouldStopLoop;if(i<this.START_MONITORING_AFTER)return!1;if(i>this.STOP_ALL_MONITORING_TIMEOUT)return this.programNoLongerBeingMonitored=!0,!1;try{this._checkOnInfiniteLoop(o,t)}catch(e){return this._sendErrorMessageToEditor(),this.programKilledSoStopMonitoring=!0,!0}return!1},_sendErrorMessageToEditor:function(){try{if(this._shouldPostMessage()){var o={action:"infinite-loop",line:this._findAroundLineNumber()};parent.postMessage(o,"*")}else this._throwAnErrorToStopPen()}catch(t){this._throwAnErrorToStopPen()}},_shouldPostMessage:function(){return document.location.href.match(/boomerang/)},_throwAnErrorToStopPen:function(){throw"We found an infinite loop in your Pen. We've stopped the Pen from running. Please correct it or contact support@codepen.io."},_findAroundLineNumber:function(){var o=new Error,t=0;if(o.stack){var i=o.stack.match(/boomerang\S+:(\d+):\d+/);i&&(t=i[1])}return t},_checkOnInfiniteLoop:function(o,t){if(!this._loopTimers[o])return this._loopTimers[o]=t,!1;if(t-this._loopTimers[o]>this.MAX_TIME_IN_LOOP_WO_EXIT)throw"Infinite Loop found on loop: "+o},_getTime:function(){return+new Date}},window.CP.shouldStopExecution=function(o){var t=window.CP.PenTimer.shouldStopLoop(o);return!0===t&&console.warn("[CodePen]: An infinite loop (or a loop taking too long) was detected, so we stopped its execution. Sorry!"),t},window.CP.exitedLoop=function(o){window.CP.PenTimer.exitedLoop(o)};
+
+</script>
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/d3/4.13.0/d3.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.js'></script>
+<script src='https://d3js.org/d3-scale-chromatic.v1.min.js'></script>
+<script>
+
+window.onload = scaleBody();
+window.addEventListener("resize", scaleBody);
+
+function scaleBody() {
+  let body = d3.select("body");
+  if (window.innerWidth < 1200) {
+    body.style("transform", "scale(" + window.innerWidth / 1200 + ")").
+    style("transform-origin", "0 0");
+
+  } else {
+    body.style("transform", "scale(1)");
+  }
+}
+
+//CREATE ALL THE HTML
+
+d3.
+select("body").
+append("div").
+attr("class", "main");
+
+d3.
+select(".main").
+append("div").
+attr("id", "container");
+
+
+//CREATE CANVAS
+
+const svg = d3.
+select("#container").
+append("svg").
+attr("height", 600).
+attr("width", "auto");
+
+//URL'S AND JSON GET REQUESTS
+
+const EDUCATION_FILE =
+"https://raw.githubusercontent.com/no-stack-dub-sack/testable-projects-fcc/master/src/data/choropleth_map/for_user_education.json";
+const COUNTY_FILE =
+"https://raw.githubusercontent.com/no-stack-dub-sack/testable-projects-fcc/master/src/data/choropleth_map/counties.json";
+
+d3.
+queue().
+defer(d3.json, COUNTY_FILE).
+defer(d3.json, EDUCATION_FILE).
+await(allTheStuff);
+
+//ALL THE STUFF USING JSON FILES
+
+function allTheStuff(error, us, education) {
+  if (error) throw error;
+
+  let educationArray = [];
+  for (let i in education) {
+    educationArray.push(education[i].bachelorsOrHigher);
+  }
+  let maxEd = d3.max(educationArray);
+  let minEd = d3.min(educationArray);
+
+  let edStep = Math.round((maxEd - minEd) / 9);
+  let edScale = [];
+  for (let i = Math.round(minEd + edStep); i <= maxEd; i += edStep) {if (window.CP.shouldStopExecution(0)) break;
+    edScale.push(i - 1);
+  }window.CP.exitedLoop(0);
+
+  const color = d3.schemeBlues[9];
+
+  function colorSelect(x) {
+    for (let i = 0; i < 9; i++) {if (window.CP.shouldStopExecution(1)) break;
+      if (x <= edScale[i]) {
+        return color[i];
+      }
+    }window.CP.exitedLoop(1);
+  }
+
+ 
+
+  // CREATE COUNTIES
+
+  svg.
+  append("g").
+  attr("class", "counties").
+  selectAll("path").
+  data(topojson.feature(us, us.objects.counties).features).
+  enter().
+  append("path").
+  attr("class", "county").
+  attr("d", d3.geoPath()).
+  style("fill", d => {
+    let filter = education.filter(x => x.fips == d.id);
+    return colorSelect(filter[0].bachelorsOrHigher);
+  }).
+  attr("data-id", d => d.id).
+  attr("data-fips", (d, i) => d.id).
+  attr("data-education", d => {
+    let filter = education.filter(x => x.fips == d.id);
+    return filter[0].bachelorsOrHigher;
+  }).
+  on("mouseover", countyHover).
+  on("mouseout", countyOut);
+
+  //COUNTY HOVER FUNCTIONS
+  let prevColor;
+
+  function countyHover(d, i) {
+
+    prevColor = this.style.fill;
+
+    d3.select(this).style("fill", "black");
+
+    let stateId;
+    if (this.getAttribute("data-id").length == 4) {
+      stateId = "0" + d.id.toString().substr(0, 1);
+    } else {
+      stateId = d.id.toString().substr(0, 2);
+    }
+
+    d3.
+    select('.state[data-id="' + stateId + '"]').
+    style("stroke", "black").
+    style("stroke-width", "2");
+
+    let countyD = this.getAttribute("d");
+    let x = Number(countyD.split(/[M,.]/)[1]);
+    let y = Number(countyD.split(/[M,.]/)[3]);
+
+    d3.
+    select("#tooltip").
+    style("visibility", "visible").
+    style("top", y + 130 + "px").
+    style("left", x + 130 + "px").
+    attr("data-education", function () {
+      let county = education.filter(x => x.fips == d.id);
+      return county[0].bachelorsOrHigher;
+    }).
+    html(function () {
+      let county = education.filter(x => x.fips == d.id);
+      return `${
+      county[0].area_name
+      }, ${county[0].state}</br>${county[0].bachelorsOrHigher}%`;
+    });
+  }
+
+  function countyOut(d, i) {
+
+    let sliderColor = "255,0,0";
+
+    if (sliderColor != "rgb(255, 0, 0)") {
+      d3.select(this).style("fill", prevColor);
+    } 
+    
+
+    let stateId;
+    if (this.getAttribute("data-id").length == 4) {
+      stateId = "0" + d.id.toString().substr(0, 1);
+    } else {
+      stateId = d.id.toString().substr(0, 2);
+    }
+
+    d3.
+    select('.state[data-id="' + stateId + '"]').
+    style("stroke", "white").
+    style("stroke-width", "1");
+
+    d3.
+    select("#tooltip").
+    style("visibility", "hidden").
+    style("transform", "translate(0px");
+  }
+
+  //CREATE STATES BORDERS
+
+  svg.
+  append("g").
+  attr("class", "states").
+  selectAll("path").
+  data(topojson.feature(us, us.objects.states).features).
+  enter().
+  append("path").
+  attr("class", "state").
+  attr("data-id", d => d.id).
+  attr("d", d3.geoPath());
+
+
+  d3.
+  select("#container").
+  append("div").
+  attr("id", "tooltip");
+}
+//# sourceURL=pen.js
+</script>
+</body>
+</html>

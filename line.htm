@@ -1,0 +1,89 @@
+
+<!doctype html>
+<html>
+
+<head>
+  <title>Line Styles</title>
+  <script src="https://www.chartjs.org/dist/2.7.3/Chart.bundle.js"></script>
+  <script src="https://www.chartjs.org/samples/latest/utils.js"></script>
+  <style>
+  canvas{
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+  }
+  </style>
+</head>
+
+<body>
+<h1>Your specialized skills</h1>
+
+  <div>
+    <canvas id="canvas"></canvas>
+  </div>
+  <script>
+    var config = {
+      type: 'line',
+      data: {
+        labels: ['Skill no.1', 'Skill no.2', 'Skill no.3', 'Skill no.4', 'Skill no.5', 'Skill no.6', 'Skill no.7'],
+        datasets: [{
+          backgroundColor: window.chartColors.red,
+          borderColor: window.chartColors.red,
+          pointRadius: 5,
+          pointHoverRadius: 10,
+          pointBackgroundColor: "#ff0000",
+
+          data: [
+            35,12,18,32,24,38,34,17
+          ],
+          fill: true,
+        }]
+      },
+      options: {
+        responsive: true,
+        title: {
+          display: false,
+          text: ''
+        },
+        legend: {
+           display: false
+        },
+         tooltips: {
+            enabled: false,
+            mode: 'index',
+            intersect: false
+         },
+        hover: {
+          mode: 'nearest',
+          intersect: true
+        },
+        scales: {
+          xAxes: [{
+            display: true,
+            line: false,
+            gridLines : {
+                display : false
+            },
+            scaleLabel: {
+              display: false,
+              labelString: 'Skills'
+            }
+          }],
+          yAxes: [{
+            display: false,
+            scaleLabel: {
+              display: false
+            }
+          }]
+        }
+      }
+    };
+
+    window.onload = function() {
+      var ctx = document.getElementById('canvas').getContext('2d');
+      window.myLine = new Chart(ctx, config);
+    };
+  </script>
+</body>
+
+</html>
