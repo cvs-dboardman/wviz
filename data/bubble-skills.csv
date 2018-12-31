@@ -1,0 +1,8 @@
+Type,Skill,Level,Demand
+Specialized,Research,102,High demand
+BaselineCreativity,130,Low demand
+Specialized,Planning,200,Low demand
+Baseline,Teamwork,150,Steady demand
+Specialized,Computer Literacy,100,High demand
+Specialized,Planning,390,High demand
+Baseline,Empathy,400,Low demand

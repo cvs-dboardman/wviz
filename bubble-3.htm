@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+
+.skills-need{
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  background-color: #ccc;
+  border-radius: 50%;
+}
+
+.skills-have{
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  background-color: #4A90E2;
+  border-radius: 50%;
+}
+
+svg{
+  border: 1px solid #333;
+  width: 100%;
+}
+
+  </style>
+</head>
+<body>
+
+<h2>Skills</h2>
+<span class="skills-have"></span> Skills you have
+<span class="skills-need"></span> Skills you need
+<div id="skills-viz"></div>
+
+
+
+<script src="https://d3js.org/d3.v3.min.js"></script>
+<script>
+ var width = 1200, 
+    height = 700;
+    //color    = d3.scale.category20c(); //color category
+
+// SKILLS HAVE
+
+var bubble = d3.layout.pack()
+    .sort(null)
+    .size([width, height])
+    .padding(30);
+
+
+var svg = d3.select("#skills-viz")
+    .append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .attr("class", "bubble");
+
+
+d3.csv("data/bubble-skills.csv", function(error, data){
+
+      //convert numerical values from strings to numbers
+      data = data.map(function(d){ d.value = +d["Level"]; return d; });
+      var nodes = bubble.nodes({children:data}).filter(function(d) { return !d.children; });
+
+      //setup the chart
+      var bubbles = svg.append("g")
+          .attr("transform", "translate(0,0)")
+          .selectAll(".bubble")
+          .data(nodes)
+          .enter();
+
+      //create the bubbles
+      bubbles.append("circle")
+          .attr("r", function(d){ return d.r; })
+          .attr("cx", function(d){ return d.x; })
+          .attr("cy", function(d){ return d.y; })
+          .style("fill", function(d) { 
+            if(d["Type"]=="Baseline") return "#cccccc"; 
+            else return "#4A90E2"; 
+            //return color(d.value); 
+          });
+
+      //format the text for each bubble
+      bubbles.append("text")
+          .attr("x", function(d){ return d.x; })
+          .attr("y", function(d){ return d.y + 5; })
+          .attr("text-anchor", "middle")
+          .text(function(d){ return d["Skill"]; })
+          .style({
+              "fill":"white", 
+              "font-family":"sans-serif",
+              "font-size": "14px"
+          });
+
+
+      bubbles.append("text")
+          .attr("x", function(d){ return d.x; })
+          .attr("y", function(d){ return d.y + 30; })
+          .attr("text-anchor", "middle")
+          .text(function(d){ return d["Demand"]; })
+          .style({
+              "fill":"white", 
+              "font-family":"sans-serif",
+              "font-size": "10px"
+          });
+
+
+
+  })
+
+
+
+</script>
+</body>
+</html>
