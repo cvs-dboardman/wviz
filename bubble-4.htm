@@ -34,8 +34,8 @@ svg{
 <body>
 
 <h2>Skills</h2>
-<span class="skills-have"></span> Skills you have
-<span class="skills-need"></span> Skills you need
+<span class="skills-have"></span> Skills in high demand
+<span class="skills-need"></span> Skills in common
 <div id="skills-viz"></div>
 
 
@@ -98,16 +98,7 @@ d3.csv("data/bubble-skills.csv", function(error, data){
           });
 
 
-      bubbles.append("text")
-          .attr("x", function(d){ return d.x; })
-          .attr("y", function(d){ return d.y + 30; })
-          .attr("text-anchor", "middle")
-          .text(function(d){ return d["Demand"]; })
-          .style({
-              "fill":"black", 
-              "font-family":"sans-serif",
-              "font-size": "10px"
-          });
+
 
 
 

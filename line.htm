@@ -12,13 +12,17 @@
     -webkit-user-select: none;
     -ms-user-select: none;
   }
+
+  .container{
+  	height: 300px;
+  }
+
   </style>
 </head>
 
 <body>
-<h1>Your specialized skills</h1>
 
-  <div>
+  <div class="container">
     <canvas id="canvas"></canvas>
   </div>
 
@@ -30,13 +34,13 @@
 	var chart = document.getElementById('canvas').getContext('2d'),
 		gradientColor = chart.createLinearGradient(0, 0, 0, 450);
 
-	gradientColor.addColorStop(0, 'rgba(255, 0,0, 0.3)');
-	gradientColor.addColorStop(0.2, 'rgba(255, 0, 0, 0.25)');
+	gradientColor.addColorStop(0.5, 'rgba(255, 0,0, 0.1)');
+	gradientColor.addColorStop(0.01, 'rgba(255, 0, 0, 0.5)');
 	gradientColor.addColorStop(1, 'rgba(255, 0, 0, 0)');
 
 
 	var data  = {
-	    labels: ['Skill no.1', 'Skill no.2', 'Skill no.3', 'Skill no.4', 'Skill no.5', 'Skill no.6', 'Skill no.7'],
+	    labels: ['Materials Planning', 'Integrated Master Plan', 'Improvement', 'Synchronization', 'Strategic Sourcing', 'Six Sigma', 'Planning and Sourcing'],
 	        datasets: [{
 	          backgroundColor: gradientColor, //window.chartColors.red,
 	          borderColor: window.chartColors.red,
@@ -53,7 +57,7 @@
 
 		var options = {
 			responsive: true,
-			maintainAspectRatio: true,
+			maintainAspectRatio: false,
 			animation: {
 				easing: 'easeInOutQuad',
 				duration: 520
