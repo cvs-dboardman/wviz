@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+  .skillsviz{
+    float: left;
+    width: 50%;
+  } 
+
+
+  </style>
+</head>
+<body>
+
+<div class="skillsviz">
+  <h2>Skills you have</h2>
+  <div id="skills-have"></div>
+</div>
+
+
+<div class="skillsviz">
+  <h2>Skills you need</h2>
+  <div id="skills-need"></div>
+</div>
+
+
+<script src="https://d3js.org/d3.v3.min.js"></script>
+<script>
+ var diameter = 600, //max size of the bubbles
+    color1    = d3.scale.category10(); //color category
+    color2    = d3.scale.category20c(); //color category
+
+// SKILLS HAVE
+
+var bubble1 = d3.layout.pack()
+    .sort(null)
+    .size([diameter, diameter])
+    .padding(20);
+
+
+var svg1 = d3.select("#skills-have")
+    .append("svg")
+    .attr("width", diameter)
+    .attr("height", diameter)
+    .attr("class", "bubble1");
+
+
+d3.csv("data/bubble-skills-1.csv", function(error, data){
+
+      //convert numerical values from strings to numbers
+      data = data.map(function(d){ d.value = +d["Level"]; return d; });
+      var nodes = bubble1.nodes({children:data}).filter(function(d) { return !d.children; });
+
+      //setup the chart
+      var bubbles1 = svg1.append("g")
+          .attr("transform", "translate(0,0)")
+          .selectAll(".bubble1")
+          .data(nodes)
+          .enter();
+
+      //create the bubbles
+      bubbles1.append("circle")
+          .attr("r", function(d){ return d.r; })
+          .attr("cx", function(d){ return d.x; })
+          .attr("cy", function(d){ return d.y; })
+          .style("fill", function(d) { return color1(d.value); });
+
+      //format the text for each bubble
+      bubbles1.append("text")
+          .attr("x", function(d){ return d.x; })
+          .attr("y", function(d){ return d.y + 5; })
+          .attr("text-anchor", "middle")
+          .text(function(d){ return d["Skill"]; })
+          .style({
+              "fill":"white", 
+              "font-family":"sans-serif",
+              "font-size": "18px"
+          });
+  })
+
+
+// SKILLS NEED
+var bubble2 = d3.layout.pack()
+    .sort(null)
+    .size([diameter, diameter])
+    .padding(5);
+
+var svg2 = d3.select("#skills-need")
+    .append("svg")
+    .attr("width", diameter)
+    .attr("height", diameter)
+    .attr("class", "bubble2");
+
+d3.csv("data/bubble-skills-2.csv", function(error, data){
+
+      //convert numerical values from strings to numbers
+      data = data.map(function(d){ d.value = +d["Level"]; return d; });
+      var nodes = bubble1.nodes({children:data}).filter(function(d) { return !d.children; });
+
+      //setup the chart
+      var bubbles2 = svg2.append("g")
+          .attr("transform", "translate(0,0)")
+          .selectAll(".bubble2")
+          .data(nodes)
+          .enter();
+
+      //create the bubbles
+      bubbles2.append("circle")
+          .attr("r", function(d){ return d.r; })
+          .attr("cx", function(d){ return d.x; })
+          .attr("cy", function(d){ return d.y; })
+          .style("fill", function(d) { return color2(d.value); });
+
+      //format the text for each bubble
+      bubbles2.append("text")
+          .attr("x", function(d){ return d.x; })
+          .attr("y", function(d){ return d.y + 5; })
+          .attr("text-anchor", "middle")
+          .text(function(d){ return d["Skill"]; })
+          .style({
+              "fill":"white", 
+              "font-family":"sans-serif",
+              "font-size": "18px"
+          });
+  })
+
+</script>
+</body>
+</html>

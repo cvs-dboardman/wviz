@@ -50,8 +50,8 @@ d3.json("data/bubble.json", function (error, root) {
     node.on("mouseout", handleMouseOut);
     node.append("text") // The label
     .attr("dy", ".5ex").
-    style("text-anchor", "middle") // CSS styling
-    .style("text-decoration", "underline").
+    style("text-anchor", "middle").
+    style("text-decoration", "underline").
     style("font-family", "sans-serif").
     text(function (d) {return d.className.substring(0, d.r / 3);});
 });
