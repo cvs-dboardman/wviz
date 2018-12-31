@@ -1,0 +1,85 @@
+
+<!doctype html>
+<html>
+
+<head>
+	<title>Half Chart</title>
+	<script src="https://www.chartjs.org/dist/2.7.3/Chart.bundle.js"></script>
+	<script src="https://www.chartjs.org/samples/latest/utils.js"></script>
+	<script type="text/javascript" src="js/chartjs-plugin-labels.js"></script>
+
+
+	<style>
+	canvas {
+		-moz-user-select: none;
+		-webkit-user-select: none;
+		-ms-user-select: none;
+	}
+	</style>
+</head>
+
+<body>
+	<div id="canvas-holder" style="width:40%">
+		<canvas id="chart-area"></canvas>
+	</div>
+
+
+	<script>
+
+		var config = {
+			type: 'doughnut',
+			data: {
+				datasets: [{
+					data: [10,20,40,50,20],
+					backgroundColor: ['#333333','#666666',"#CCCCCC","#BBBBBB","#999999"],
+					label: 'fff'
+				}],
+				labels: [
+					'High School',
+					'Bachelor',
+					'Masters',
+					'PhD'
+				]
+			},
+			options: {
+				responsive: true,
+				maintainAspectRatio: true,
+				animation: {
+					easing: 'easeInOutQuad',
+					duration: 520,
+					animateScale: true,
+					animateRotate: true
+				},
+				legend: {
+					position: 'top',
+				},
+				title: {
+					display: false
+				},
+				labels: {
+				    render: 'label',
+				    fontColor: '#000',
+				    position: 'outside'
+				 },
+		        rotation: 1 * Math.PI,
+		        circumference: 1 * Math.PI
+			}
+		};
+
+		window.onload = function() {
+			var ctx = document.getElementById('chart-area').getContext('2d');
+			window.myDoughnut = new Chart(ctx, config);
+		};
+
+
+		var colorNames = Object.keys(window.chartColors);
+
+
+
+
+
+	</script>
+
+</body>
+
+</html>
