@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%">
+<defs>
+    <pattern id="tiles" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="scale(15) rotate(45)">
+        <g id="blackboxwhitefill">
+            <rect width="3" height="3" id="bigbox" />
+            <use xlink:href="#smallbox" fill="#fff" transform="translate(-3)" />
+        </g>
+        <g id="whiteboxblackfill">
+            <use xlink:href="#bigbox" fill="#fff" transform="translate(3)" />
+            <rect width="1" height="1" x="4" y="1" id="smallbox" />
+        </g>
+    <use xlink:href="#whiteboxblackfill" transform="translate(-3,3)" />
+    <use xlink:href="#blackboxwhitefill" transform="translate(3,3)" />
+    </pattern>
+</defs>
+<rect width="100%" height="100%" fill="url(#tiles)" />
+</svg>
