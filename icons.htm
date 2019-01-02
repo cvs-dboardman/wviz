@@ -17,9 +17,8 @@ pre {
 img{
     width: 120px; 
     height: 120px;
-    background-image:url('img/topography.svg');
-    background-color: rgba(255,0,0,1);
-    border:8px solid black;
+    background-image:url('img/pattern2.svg');
+    border:8px solid #4A90E2;
 }
 
 .round { border-radius: 50%; }
@@ -106,7 +105,7 @@ img{
 
         context.font = Math.round(canvas.width / 2.5) + "px Helvetica-Bold";
         context.textAlign = "center";
-        context.fillStyle = "#000";
+        context.fillStyle = "#fff";
         context.fillText(initials, size / 2, size / 1.5);
 
         dataURI = canvas.toDataURL();
